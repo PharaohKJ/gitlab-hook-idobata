@@ -2,12 +2,23 @@ require 'sinatra'
 require 'json'
 require 'idobata'
 require 'slim'
+require 'uri'
+require 'cgi'
 
 Idobata.hook_url = ENV['HOOK_URL']
 
+IDOBATA_HOST = 'idobata.io'
+
 class App < Sinatra::Base
-  post '/push.json' do
+  post '/push.json/:cgi_escaped_url' do
     data = JSON.parse request.body.read
+
+    unless :cgi_escaped_url.nil?
+      url = CGI.unescape(:escaped_url)
+      if URI.parse(url).host == IDOBATA_HOST
+        Idobata.hook_url = url
+      end
+    end
 
     Thread.new do
       if ENV['BRANCH'] == 'all' || data["ref"].match(/#{ENV['BRANCH']}/)
@@ -19,4 +30,3 @@ class App < Sinatra::Base
     { status: "ok" }.to_json
   end
 end
-

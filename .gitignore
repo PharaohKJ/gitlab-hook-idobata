@@ -1,2 +1,6 @@
 .bundle
+.env
 vendor/bundle
+GTAGS
+GRTAGS
+GPATH
