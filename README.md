@@ -31,6 +31,16 @@ $ bundle exec foreman start web
   Trigger: ✓ Push events
 ```
 
+#### Or Set gitlab hook: with URL
+
+1. open settings page of your repository.
+2. Add web hook: with cgi_escaped_url parameter
+
+```
+  URL: http://$HOST:$PORT/push.json?cgi_escaped_url=https%3A%2F%2Fidobata.io%2Fhook%2Fgeneric%2F224f83fc-xxxx-xxxx-xxxx-xxxxxxxxx
+  Trigger: ✓ Push events
+```
+
 ## Copyright
 
 - Copyright (c) 2014 MICHII Shunske (harukasan)
